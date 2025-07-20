@@ -1,4 +1,4 @@
-# Custom Find in Page - Chrome Extension
+# FindAI - Chrome Extension
 
 A Chrome extension that replaces the default browser find functionality with a custom UI that includes AI-powered search assistance using DeepSeek API.
 
