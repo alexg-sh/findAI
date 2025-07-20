@@ -1,0 +1,22 @@
+{
+    "manifest_version": 3,
+    "name": "Custom Find in Page",
+    "version": "1.0",
+    "description": "Disable default find and provide a custom find UI with AI assistance.",
+    "permissions": [
+      "activeTab"
+    ],
+    "host_permissions": [
+      "https://api.deepseek.com/*"
+    ],
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["config.js", "content_script.js"],
+        "css": ["findUI.css"]
+      }
+    ],
+    "action": {
+      "default_title": "Custom Find in Page"
+    }
+  }

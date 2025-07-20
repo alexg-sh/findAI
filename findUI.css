@@ -1,0 +1,537 @@
+#myFindBar {
+    position: fixed;
+    top: -70px;
+    right: 20px;
+    background: rgb(30, 30, 30);
+    padding: 6px 12px;
+    border-radius: 12px;
+    z-index: 999999;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    color: #fff;
+    transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+    width: 420px;
+    border: rgb(95, 95, 95) solid 0.1px;
+    transform: translateY(0px);
+}
+
+#myFindBar.slide-down {
+    transform: translateY(90px);
+}
+
+#myFindBar.slide-up {
+    transform: translateY(-20px);
+}
+
+#myFindBar #findBarContent {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#myFindBar #findInputWrapper {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+}
+
+#myFindBar #findInput {
+    width: 100%;
+    padding: 8px 60px 8px 12px;
+    border: none;
+    background: rgb(30, 30, 30);
+    color: #fff;
+    font-size: 16px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+#myFindBar #findInput::placeholder {
+    color: #bbb;
+}
+
+#myFindBar #askButton {
+    position: relative;
+    padding: 4px 10px;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 14px;
+    line-height: 1;
+    transition: background 0.2s ease;
+    margin-left: 6px;
+}
+
+#myFindBar #askButton:hover {
+    background: rgba(66, 66, 66, 0.618);
+}
+
+#myFindBar #askButton.loading {
+    background: rgba(255, 255, 255, 0.1);
+    cursor: not-allowed;
+    position: relative;
+    overflow: hidden;
+}
+
+#myFindBar #askButton.loading::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    animation: shimmer 1.5s infinite;
+}
+
+#myFindBar #askButton.loading:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+#myFindBar span#findStatus {
+    font-size: 14px;
+    display: inline-block;
+    color: #767676cb;
+    min-width: 80px;
+    text-align: center;
+    white-space: nowrap;
+    margin-right: 6px;
+}
+
+#myFindBar span#findStatus.visible {
+    display: inline-block;
+}
+
+#myFindBar #buttonGroup {
+    display: flex;
+    gap: 6px;
+}
+
+#myFindBar button {
+    padding: 4px 8px;
+    border: none;
+    background: transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 16px;
+    line-height: 1;
+    transition: background 0.2s ease;
+}
+
+#myFindBar button:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+#myFindBar #findPrev,
+#myFindBar #findNext {
+    display: none;
+}
+
+#myFindBar #findPrev.visible,
+#myFindBar #findNext.visible {
+    display: inline-block;
+}
+
+.highlight {
+    background: #ffeb3b;
+    color: #000;
+    border-radius: 2px;
+}
+
+.current {
+    background: #ff9800;
+    color: #333;
+}
+
+/* Chat UI Styles */
+#myFindBar #chatContainer {
+    background: rgba(30, 30, 30, 0.95);
+    border-radius: 12px;
+    padding: 8px;
+    max-width: 400px;
+    position: relative;
+}
+
+#myFindBar #chatHeader {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 2px 0;
+    margin-bottom: 2px;
+}
+
+#myFindBar #backToFindButton {
+    padding: 4px 8px;
+    border: none;
+    background: rgba(255, 0, 0, 0.1);
+    border-radius: 6px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 16px;
+    line-height: 1;
+    transition: background 0.2s ease;
+    margin-right: 6px;
+}
+
+#myFindBar #backToFindButton:hover {
+    background: rgba(66, 66, 66, 0.618);
+}
+
+#myFindBar #chatCloseButton {
+    padding: 4px 8px;
+    border: none;
+    background: transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 16px;
+    line-height: 1;
+    transition: background 0.2s ease;
+}
+
+#myFindBar #chatCloseButton:hover {
+    background: rgba(66, 66, 66, 0.618);
+}
+
+#myFindBar #chatMessages {
+    max-height: 350px;
+    overflow-y: auto;
+    margin-bottom: 8px;
+}
+
+#myFindBar #pageReadMessage {
+    font-size: 10px;
+    color: rgba(153, 153, 153, 0.6);
+    text-align: left;
+    margin-bottom: 8px;
+    padding: 4px 6px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    opacity: 0.7;
+}
+
+#myFindBar #pageReadMessage.skeleton {
+    height: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+}
+
+#myFindBar #pageReadMessage.skeleton::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    animation: shimmer 1.5s infinite;
+}
+
+#myFindBar .chat-message {
+    margin-bottom: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: left;
+    padding: 10px 14px;
+    border-radius: 10px;
+}
+
+#myFindBar .user-message {
+    color: #fff;
+    font-weight: 600;
+    background: rgba(20, 20, 20, 0.8);
+    border: 1px solid rgba(0, 123, 255, 0.3);
+}
+
+#myFindBar .assistant-message {
+    color: #e8e8e8;
+    background: rgba(15, 15, 15, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+#myFindBar .assistant-message p {
+    margin: 0 0 8px 0;
+}
+
+#myFindBar .assistant-message strong {
+    color: #fff;
+    font-weight: 600;
+}
+
+#myFindBar .assistant-message em {
+    font-style: italic;
+    color: #f0f0f0;
+}
+
+#myFindBar .assistant-message del {
+    text-decoration: line-through;
+}
+
+#myFindBar .assistant-message h1,
+#myFindBar .assistant-message h2,
+#myFindBar .assistant-message h3,
+#myFindBar .assistant-message h4,
+#myFindBar .assistant-message h5,
+#myFindBar .assistant-message h6 {
+    margin: 12px 0 8px 0;
+    color: #fff;
+}
+
+#myFindBar .assistant-message h1 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+#myFindBar .assistant-message h2 {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+#myFindBar .assistant-message h3 {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+#myFindBar .assistant-message h4 {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+#myFindBar .assistant-message h5 {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+#myFindBar .assistant-message h6 {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+#myFindBar .assistant-message ul,
+#myFindBar .assistant-message ol {
+    margin: 8px 0;
+    padding-left: 24px;
+}
+
+#myFindBar .assistant-message ul li,
+#myFindBar .assistant-message ol li {
+    margin-bottom: 4px;
+    color: #e0e0e0;
+}
+
+#myFindBar .assistant-message code {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+    font-size: 13px;
+    color: #fff;
+}
+
+#myFindBar .assistant-message pre {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 10px;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 8px 0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#myFindBar .assistant-message pre code {
+    background: none;
+    padding: 0;
+    color: #e0e0e0;
+}
+
+#myFindBar .assistant-message blockquote {
+    border-left: 4px solid #007bff;
+    padding-left: 12px;
+    margin: 8px 0;
+    color: #d0d0d0;
+    background: rgba(0, 123, 255, 0.1);
+    padding: 8px 12px;
+    border-radius: 4px;
+}
+
+#myFindBar .assistant-message hr {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    margin: 16px 0;
+    opacity: 0.8;
+}
+
+#myFindBar .assistant-message a {
+    color: #4a9eff;
+    text-decoration: underline;
+}
+
+#myFindBar .assistant-message a:hover {
+    color: #66b3ff;
+}
+
+#myFindBar .skeleton-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+#myFindBar .skeleton-line {
+    height: 14px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+}
+
+#myFindBar .skeleton-line::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    animation: shimmer 1.5s infinite;
+}
+
+#myFindBar .skeleton-line.short {
+    width: 60%;
+}
+
+#myFindBar .skeleton-line.medium {
+    width: 80%;
+}
+
+@keyframes shimmer {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+#myFindBar .fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+#myFindBar #chatInputArea {
+    display: flex;
+    align-items: center;
+}
+
+#myFindBar #chatInputWrapper {
+    position: relative;
+    width: 100%;
+}
+
+#myFindBar #chatInput {
+    width: 100%;
+    padding: 6px 60px 6px 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+}
+
+#myFindBar #chatInput::placeholder {
+    color: #aaa;
+}
+
+#myFindBar #chatInput:focus {
+    border-color: #007bff;
+}
+
+#myFindBar #chatSendButton {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 4px 10px;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 14px;
+    line-height: 1;
+    transition: background 0.2s ease;
+}
+
+#myFindBar #chatSendButton:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+#myFindBar #chatSendButton.loading {
+    background: rgba(255, 255, 255, 0.1);
+    cursor: not-allowed;
+    position: relative;
+    overflow: hidden;
+}
+
+#myFindBar #chatSendButton.loading::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    animation: shimmer 1.5s infinite;
+}
+
+#myFindBar #chatSendButton.loading:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
