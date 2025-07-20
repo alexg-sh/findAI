@@ -408,6 +408,7 @@
                     const percentage = parseFloat(pageContext.percentageSent);
                     if (pageContext.totalTokens > 500) {
                         pageReadMessage.classList.add("skeleton");
+                        pageReadMessage.textContent = "Analyzing page length...";
                         pageReadMessage.style.display = "block";
                     } else {
                         pageReadMessage.style.display = "none";
@@ -495,7 +496,7 @@ ${pageContext.pageText}`;
 
                         if (pageContext.totalTokens > 500) {
                             pageReadMessage.classList.remove("skeleton");
-                            pageReadMessage.textContent = `This page is too long, I've read ${percentage}% of the page`;
+                            pageReadMessage.textContent = `📄 Page too long: Only ${pageContext.percentageSent}% analyzed (${Math.min(500, pageContext.totalTokens)} of ${pageContext.totalTokens} tokens)`;
                             pageReadMessage.style.display = "block";
                         } else {
                             pageReadMessage.style.display = "none";
