@@ -215,17 +215,17 @@
 
 /* Custom skinny scrollbar */
 #myFindBar #chatMessages::-webkit-scrollbar {
-    width: 1px;
+    width: 2px;
 }
 
 #myFindBar #chatMessages::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 1px;
 }
 
 #myFindBar #chatMessages::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 1px;
 }
 
 #myFindBar #chatMessages::-webkit-scrollbar-thumb:hover {
